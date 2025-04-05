@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.Design;
+﻿using System.Collections;
+using System.ComponentModel.Design;
 using System.Threading.Channels;
 
 Menu();
@@ -36,7 +37,8 @@ static void Menu()
     Console.WriteLine("O que gostaria de fazer?");
     Console.WriteLine("1 - Decimal para Binario;");
     Console.WriteLine("2 - Binario para Decimal;");
-    Console.WriteLine("3 - Sair.");
+    Console.WriteLine("3 - Decimal para Hecadecimal;");
+    Console.WriteLine("4 - Sair.");
 
     int x = int.Parse(Console.ReadLine());
 
@@ -50,8 +52,12 @@ static void Menu()
             ConvertBToD();
                 break;
 
-
         case 3:
+            ConvertDToHx();
+            break;
+
+
+        case 4:
             break;
 
         default:
@@ -65,7 +71,7 @@ static void Menu()
 
 
 
-static void ConvertDToB()
+static void ConvertDToB() // converte de decimal para binario com validação de input
 {
     Console.Write("Introduza um número decimal para converter para binário: ");
     if (!int.TryParse(Console.ReadLine(), out int x))
@@ -79,7 +85,7 @@ static void ConvertDToB()
     }
 
 
-        List<int> b = new List<int>();
+    List<int> b = new List<int>();
     int qo = x;
 
     while (qo > 0)
@@ -180,5 +186,57 @@ static void ConvertBToD()
     }
 
     Menu();
+
+}
+
+
+static void ConvertDToHx()
+{
+
+    Console.Write("Introduza um número decimal para converter para hexadecimal: ");
+    if (!int.TryParse(Console.ReadLine(), out int x))
+    {
+        Console.WriteLine("Número inválido!");
+        Console.WriteLine();
+        Console.WriteLine("Por favor introduz um decimal válido!");
+        ConvertDToHx();
+
+
+    }
+
+    int rst;
+    int qo;
+
+    
+    ArrayList hx = new ArrayList();
+
+    string hexChar = "0123456789ABCDEF";
+
+    while (x > 0 )
+    {
+        rst = x % 16;
+        char Hxd = hexChar[rst];
+        hx.Add(Hxd);
+        x /= 16;        
+    }
+
+   
+    
+
+    for (int i = hx.Count - 1; i >= 0; i--)
+    {
+        Console.WriteLine("indice " + i + ": " + hx[i]);
+    }
+
+    hx.Reverse();
+    Console.Write("Número em Hexadecimal: ");
+    foreach (var bit in hx)
+    {
+        Console.Write(bit);
+    }
+    Console.WriteLine();
+
+    Menu();
+
 
 }
