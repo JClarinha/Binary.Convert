@@ -254,6 +254,11 @@ static void ConvertHxToD()
                 int valor = c - 'A' + 10;
                 ToConvert[q] = valor;
             }
+            else if (ToConvert[q] is char d && char.IsDigit(d))
+            {
+                int valor = d - '0';
+                ToConvert[q] = valor;
+            }
         }
 
 
