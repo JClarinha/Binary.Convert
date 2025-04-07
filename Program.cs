@@ -1,44 +1,21 @@
 ﻿using System.Collections;
 using System.ComponentModel.Design;
 using System.Threading.Channels;
+using System.Linq;
+using System;
 
 Menu();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 static void Menu()
 {
     Console.WriteLine("Bem vindo ao Converter!");
     Console.WriteLine("O que gostaria de fazer?");
-    Console.WriteLine("1 - Decimal para Binario;");
-    Console.WriteLine("2 - Binario para Decimal;");
-    Console.WriteLine("3 - Decimal para Hecadecimal;");
-    Console.WriteLine("4 - Sair.");
+    Console.WriteLine("1 - Converter Decimal para Binario;");
+    Console.WriteLine("2 - Converter Binario para Decimal;");
+    Console.WriteLine("3 - Converter Decimal para Hexadecimal;");
+    Console.WriteLine("4 - Converter Hexadecimal para Decimal;");
+    Console.WriteLine("5 - Sair.");
 
     int x = int.Parse(Console.ReadLine());
 
@@ -58,6 +35,7 @@ static void Menu()
 
 
         case 4:
+            ConvertHxToD();
             break;
 
         default:
@@ -238,5 +216,63 @@ static void ConvertDToHx()
 
     Menu();
 
+
+}
+
+static void ConvertHxToD()
+{
+    string hexChar = "0123456789ABCDEF";
+
+    ArrayList ToConvert = new ArrayList();
+
+    Console.WriteLine("Introduza um Hexadecimal para converter para Decimal: ");
+    string inp = Console.ReadLine().ToUpper();
+
+    Console.WriteLine();
+
+    Console.WriteLine(inp);
+
+    bool check = inp.All(c => hexChar.Contains(c));
+
+    if (!check)
+    {
+        Console.WriteLine("Por favor introduz um Hexadecimal válido!");
+        ConvertHxToD();
+    }
+
+    else
+    {
+        for (int i = 0; i < inp.Length; i++)
+        {
+            ToConvert.Add(inp[i]);
+        } // Adiciona os caracteres que o utilizador colocou na ArraList
+
+        for (int q = 0; q < ToConvert.Count; q++)
+        {
+            if (ToConvert[q] is char c && c >= 'A' && c <= 'F')
+            {
+                int valor = c - 'A' + 10;
+                ToConvert[q] = valor;
+            }
+        }
+
+
+        int rst = 0;
+        int exp = 0;
+
+        for (int j = ToConvert.Count-1; j >= 0; j--)
+        {
+
+            int rsl = (int)Math.Pow(16, exp) * (int)ToConvert[j];
+            rst = rst + rsl;
+            exp++;
+        }
+        Console.WriteLine();
+        Console.WriteLine(inp + " Em decimal é: " + rst);
+    }
+    Console.WriteLine();
+    Console.WriteLine();
+
+    Menu();
 
 }
